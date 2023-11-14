@@ -4,8 +4,19 @@ Targets `aarch64-unknown-linux-gnu` architecture, uses the GPIO/I2C on the Raspb
 
 Currently just outputs to STDOUT.
 
-TODO:
-- [ ] Output to file so webserver can render results
+## Compilation
+
+Cross-compile from a PC/Mac with [cross](https://github.com/cross-rs/cross) with the command:
+
+```
+cross build --target aarch64-unknown-linux-gnu
+```
+
+and copy the file in `target/aarch64-unknown-linux-gnu/debug` called `pi-makerpower-gpio` to your Raspberry Pi Zero 2W.
+
+## TODO:
+- [ ] Read "alert" GPIO pin to trigger system shut down
+- [ ] Output to file so webserver can render values of charging, battery voltage, figure out charge level.
 - [ ] Other types of output?
 
 ## Depends on
