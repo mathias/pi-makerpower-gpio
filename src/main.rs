@@ -2,14 +2,20 @@ use std::error::Error;
 use rppal::gpio::Gpio;
 use rppal::i2c::I2c;
 
-const ALERT_GPIO: u8 = 4;
+// GPIO pins
+//const ALERT_GPIO: u8 = 4;
 
 // I2C setup
 const MPPT_CHG_I2C_ADDR: u16 = 0x12;
 const MPPT_CHG_REG_ID: usize = 0;
 
+// Helper functions to encode and decode binary-coded decimal (BCD) values.
+fn bcd2dec(bcd: u8) -> u8 {
+    (((bcd & 0xF0) >> 4) * 10) + (bcd & 0x0F)
+}
+
 fn run_i2c() -> Result<(), Box<dyn Error>> {
-    let gpio = Gpio::new();
+    let _gpio = Gpio::new();
     let mut i2c = I2c::new()?;
 
     let mut reg = [0u8; 3];
@@ -21,7 +27,9 @@ fn run_i2c() -> Result<(), Box<dyn Error>> {
 
     loop {
         let _ = i2c.block_read(MPPT_CHG_REG_ID as u8, &mut reg);
-        println!("{:?}", reg);
+        println!("{:?}", bcd2dec(reg);
+
+        thread::sleep(Duration::from_secs(1));
     }
 
 }
