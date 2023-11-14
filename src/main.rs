@@ -1,4 +1,6 @@
 use std::error::Error;
+use std::thread;
+use std::time::Duration;
 use rppal::gpio::Gpio;
 use rppal::i2c::I2c;
 
@@ -27,7 +29,10 @@ fn run_i2c() -> Result<(), Box<dyn Error>> {
 
     loop {
         let _ = i2c.block_read(MPPT_CHG_REG_ID as u8, &mut reg);
-        println!("{:?}", bcd2dec(reg);
+
+        println!("{:?}", bcd2dec(reg[0]));
+        println!("{:?}", bcd2dec(reg[1]));
+        println!("{:?}", bcd2dec(reg[2]));
 
         thread::sleep(Duration::from_secs(1));
     }
